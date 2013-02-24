@@ -40,13 +40,17 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     current_user.vote_up_for(@song)
 
-    redirect_to songs_path
+    redirect_to :back
   end
 
   def vote_down
     @song = Song.find(params[:id])
     current_user.vote_down_for(@song)
 
-    redirect_to songs_path
+    redirect_to :back
+  end
+
+  def upcoming
+    @songs = Song.upcoming
   end
 end

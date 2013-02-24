@@ -8,5 +8,9 @@ WorkshopCafe::Application.routes.draw do
     member do
       put :vote_up, :vote_down
     end
+
+    collection do
+      get :upcoming
+    end
   end
 end

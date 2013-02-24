@@ -22,6 +22,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav" style="float:right;">
               <% if user_signed_in? %>
+                <li><%= link_to 'Upcoming Song', upcoming_songs_path %></li>
                 <li><%= link_to 'Songs', songs_path %></li>
                 <li><%= link_to 'New Song', new_song_path %></li>
                 <li><%= link_to 'Recommendations', recommendations_path %></li>

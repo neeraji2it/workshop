@@ -12,7 +12,11 @@ class Song < ActiveRecord::Base
 
   has_attached_file :attachment
 
-  scope :with_vote_counts, :select => "*, ((select count(*) from votes v1 where created_at >= IFNULL(songs.last_played_at, songs.created_at) and song_id = songs.id AND voted_up=1) - 2 * (select count(*) from votes v1 where created_at >= IFNULL(songs.last_played_at, songs.created_at) and song_id = songs.id AND voted_up=0)) as vote_counts"
+  scope :with_vote_counts, :select => "*, ((select count(*) from votes v1 where v1.created_at >= IFNULL(songs.last_played_at, songs.created_at) AND v1.song_id = songs.id AND v1.voted_up=1) - 2 * (select count(*) from votes v2 where v2.created_at >= IFNULL(songs.last_played_at, songs.created_at) AND v2.song_id = songs.id AND v2.voted_up=0)) as vote_counts"
+
+  def self.upcoming
+    Song.with_vote_counts.order("vote_counts DESC").delete_if{|s| s.vote_counts < 2}
+  end
 
   def to_s
     self.name
