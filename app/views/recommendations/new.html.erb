@@ -1,0 +1,9 @@
+<h2>New recommendation</h2>
+
+<%= form_for @recommendation do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+
+  <br /><br />
+  <%= f.submit "Save", :class => "btn btn-primary" %>
+  <%= link_to "Cancel", recommendations_path %>
+<% end %>

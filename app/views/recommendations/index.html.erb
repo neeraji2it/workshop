@@ -1,0 +1,31 @@
+<h2>Recommendations list</h2>
+
+<div id="recommendations-list">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th width='150'>No of songs</th>
+        <th width='150'>Created by</th>
+        <th width='150'>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if @recommendations.present? %>
+        <% @recommendations.each do |recommendation| %>
+          <tr>
+            <td><%= recommendation.to_s %></td>
+            <td><%= recommendation.recommended_songs.count %></td>
+            <td><%= recommendation.user.to_s %></td>
+            <td><%= link_to "Edit", edit_recommendation_path(recommendation) %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan='4'>No recommendations created yet !!</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

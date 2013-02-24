@@ -1,0 +1,50 @@
+<%= f.error_messages %>
+
+<div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div class='songs-list-for-selection'>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width='20' style='text-align: center;'><%= check_box_tag :check_all %></th>
+        <th>Name</th>
+        <th width='150'>Uploaded by</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @all_songs = Song.all %>
+
+      <%= fields_for :songs do |s| %>
+        <% if @all_songs.present? %>
+          <% @all_songs.each do |song| %>
+            <% checked = params[:songs].present? ? (params[:songs][song.id.to_s].to_s == '1') : @recommendation.is_present?(song.id) %>
+            <tr>
+              <td style='text-align: center;'><%= s.check_box song.id, {:checked => checked, :class => 'selectable'} %></td>
+              <td><%= song.to_s %></td>
+              <td><%= song.user.to_s %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan='3'>No songs uploaded yet !!</td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% content_for :document_ready do %>
+  var checkUncheckAll = function(value) {
+    jQuery('.selectable').attr('checked', value);
+  };
+
+  jQuery("#check_all").change(function() {
+    checkUncheckAll(jQuery('#check_all').is(':checked'));
+  });
+  checkUncheckAll(jQuery('#check_all').is(':checked'));
+<% end %>

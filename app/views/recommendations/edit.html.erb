@@ -1,0 +1,9 @@
+<h2>Update recommendation</h2>
+
+<%= form_for @recommendation do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+
+  <br /><br />
+  <%= f.submit "Update", :class => "btn btn-primary" %>
+  <%= link_to "Cancel", recommendations_path %>
+<% end %>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WorkshopCafe</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application", "bootstrap/bootstrap","bootstrap/bootstrap.min" %>
+    <%= csrf_meta_tags %>
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <%= link_to "WorkshopCafe",root_path,:class=>"brand" %>
+          <div class="nav-collapse collapse">
+            <ul class="nav" style="float:right;">
+              <% if user_signed_in? %>
+                <li><%= link_to 'Songs', songs_path %></li>
+                <li><%= link_to 'New Song', new_song_path %></li>
+                <li><%= link_to 'Recommendations', recommendations_path %></li>
+                <li><%= link_to 'New Recommendation', new_recommendation_path %></li>
+                <li><%= link_to 'LogOut', destroy_user_session_path,:method => 'DELETE' %></li>
+              <% else %>
+                <li><%= link_to 'Login', new_user_session_path %></li>
+                <li><%= link_to 'Register', new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <% ['notice', 'error', 'warning'].each do |f|%>
+        <% if flash[f.to_sym] %>
+          <div class="<%= f %>"><%=  flash[f.to_sym] %></div>
+        <% end %>
+      <% end %>
+      <%= yield %>
+
+    </div> <!-- /container -->
+
+
+    <div style='display: none;' id='javascripts'>
+      <%= javascript_tag do %>
+        jQuery(document).ready(function() {
+          <%= yield :document_ready %>
+        });
+      <% end %>
+    </div>
+  </body>
+</html>
+
+

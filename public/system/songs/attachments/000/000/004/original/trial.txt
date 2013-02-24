@@ -1,0 +1,42 @@
+Sitemap is a list of urls for bots provided in a specified xml format. We use xml builder to generate sitemap xml for the above scenario as below:
+
+In some view (app/views/home/sitemap.xml.builder):
+-----------------------------------------------------
+xml.instruct!
+
+xml.urlset(:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9") {
+  Boat.where(:activated => 1).each do |boat|
+    xml.url {
+      xml.loc(yacht_url(boat))
+      xml.changefreq("daily")
+      xml.priority("0.5")
+    }
+  end
+  
+  Destination.where(:activated => 1).each do |destination|
+    xml.url {
+      xml.loc(destination_url(destination))
+      xml.changefreq("weekly")
+      xml.priority("0.5")
+    }
+  end
+}
+
+
+In routes.rb:
+------------------
+resources :yachts
+resources :destinations
+match 'sitemap' => 'home#sitemap', :as => :sitemap, :format => "xml"
+
+Inside model boat.rb:
+------------------------------
+def to_param
+  self.permalink
+end
+
+Inside model destination.rb:
+------------------------------
+def to_param
+  self.permalink
+end
