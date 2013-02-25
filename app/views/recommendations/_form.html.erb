@@ -40,11 +40,10 @@
 
 <% content_for :document_ready do %>
   var checkUncheckAll = function(value) {
-    jQuery('.selectable').attr('checked', value);
+    jQuery('.selectable').prop('checked', value);
   };
 
   jQuery("#check_all").change(function() {
     checkUncheckAll(jQuery('#check_all').is(':checked'));
   });
-  checkUncheckAll(jQuery('#check_all').is(':checked'));
 <% end %>
