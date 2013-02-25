@@ -3,10 +3,14 @@ WorkshopCafe::Application.routes.draw do
 
   root :to => 'home#index'
 
+  namespace :admin do
+    resource :dashboard, :controller => :dashboard
+  end
+
   resources :recommendations
   resources :songs do
     member do
-      put :vote_up, :vote_down
+      put :vote_up, :vote_down, :play_now
     end
 
     collection do

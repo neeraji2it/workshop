@@ -2,6 +2,7 @@ class Recommendation < ActiveRecord::Base
   attr_accessible :name, :user_id
 
   has_many :recommended_songs
+  has_many :songs, :through => :recommended_songs
   belongs_to :user
 
   validates_presence_of :name

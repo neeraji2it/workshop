@@ -1,4 +1,6 @@
 class RecommendationsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @recommendations = Recommendation.all
   end
@@ -48,5 +50,10 @@ class RecommendationsController < ApplicationController
     @recommendation.destroy
 
     redirect_to recommendations_path
+  end
+
+  def show
+    @recommendation = Recommendation.find(params[:id])
+    @songs = @recommendation.songs
   end
 end

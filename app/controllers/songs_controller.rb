@@ -1,4 +1,6 @@
 class SongsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @songs = Song.all
   end
@@ -52,5 +54,13 @@ class SongsController < ApplicationController
 
   def upcoming
     @songs = Song.upcoming
+  end
+
+  def play_now
+    @song = Song.find(params[:id])
+    @song.last_played_at = Time.zone.now
+    @song.save
+
+    redirect_to :back
   end
 end

@@ -1,0 +1,32 @@
+<h2>Songs list</h2>
+
+<div id="songs-list">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th width='150'>Uploaded by</th>
+        <th width='150'>Votes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if @songs.present? %>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.to_s %></td>
+            <td><%= song.user.to_s %></td>
+            <td>
+              <%= song.vote_count %>
+              <%= link_to "Play now", play_now_song_path(song), :method => :put %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan='3'>No songs uploaded yet !!</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
