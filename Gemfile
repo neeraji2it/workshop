@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
-gem 'mysql2'
 gem 'devise'
 gem 'paperclip'
 gem 'dynamic_form'
@@ -17,3 +16,12 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :development do
+  gem 'mysql2'
+end
+
+group :production do
+  gem 'pg'
+  gem 'activerecord-postgresql-adapter'
+end
