@@ -49,16 +49,17 @@
     </div>
 
     <div class="container">
-
-      <% ['notice', 'error', 'warning'].each do |f|%>
+      <% ['notice', 'error', 'success', 'warning'].each do |f|%>
         <% if flash[f.to_sym] %>
-          <div class="<%= f %>"><%=  flash[f.to_sym] %></div>
+          <div class="alert alert-<%= f %>">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong><%= f.humanize %>!</strong> <%= flash[f.to_sym] %>
+          </div>
         <% end %>
       <% end %>
+
       <%= yield %>
-
     </div> <!-- /container -->
-
 
     <div style='display: none;' id='javascripts'>
       <%= javascript_tag do %>
@@ -69,5 +70,3 @@
     </div>
   </body>
 </html>
-
-
