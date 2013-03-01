@@ -1,35 +1,22 @@
+<%= link_to "New Recommendation", new_recommendation_path, :class => "btn", :style => "float: right;" %>
+
 <h2>Recommendations list</h2>
 
 <div id="recommendations-list">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th width='150'>No of songs</th>
-        <th width='150'>Created by</th>
-        <th width='150'>Actions</th>
-      </tr>
-    </thead>
+  <% if @recommendations.present? %>
+    <% @recommendations.each do |recommendation| %>
+      <div class='recommendation' style="border: 2px solid #dddddd; margin-bottom: 5px; padding: 5px; border-radius: 5px;">
+        <%= link_to recommendation.to_s, recommendation_path(recommendation), :style => "font-size: 18px;" %><span style='color: #aaaaaa; font-size: 11px;'>, <%= recommendation.recommended_songs.count %> songs - by <%= recommendation.user.to_s %>
 
-    <tbody>
-      <% if @recommendations.present? %>
-        <% @recommendations.each do |recommendation| %>
-          <tr>
-            <td><%= link_to recommendation.to_s, recommendation_path(recommendation) %></td>
-            <td><%= recommendation.recommended_songs.count %></td>
-            <td><%= recommendation.user.to_s %></td>
-            <td>
-              <% if current_user.id == recommendation.user_id %>
-                <%= link_to "Edit", edit_recommendation_path(recommendation) %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      <% else %>
-        <tr>
-          <td colspan='4'>No recommendations created yet !!</td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+          <% if current_user.id == recommendation.user_id %>
+            <%= link_to "(Edit)", edit_recommendation_path(recommendation) %>
+          <% end %>
+        </span>
+
+        <%= render :partial => "songs_list", :locals => {:songs => recommendation.songs} %>
+      </div>
+    <% end %>
+  <% else %>
+      No recommendations created yet !!
+  <% end %>
 </div>

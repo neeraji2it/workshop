@@ -13,3 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+// Below is a temporary fix for logout link with delete method. There is some issue with bootstrap.min.js, it neutralizes the link with method paraemter to GET method if it is present in the dropdown.
+jQuery(document).ready(function() {
+  $('body')
+    .off('click.dropdown touchstart.dropdown.data-api', '.dropdown')
+    .on('click.dropdown touchstart.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() });
+});

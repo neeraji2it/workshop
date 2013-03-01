@@ -1,8 +1,4 @@
-<%= link_to "New song", new_song_path, :class => "btn", :style => "float: right;" %>
-
-<h2>Songs list</h2>
-
-<div id="songs-list">
+<div class="songs-list">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -13,8 +9,8 @@
     </thead>
 
     <tbody>
-      <% if @songs.present? %>
-        <% @songs.each do |song| %>
+      <% if songs.present? %>
+        <% songs.each do |song| %>
           <tr>
             <td><%= song.to_s %></td>
             <td><%= song.user.to_s %></td>
